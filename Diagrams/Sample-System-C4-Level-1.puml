@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Sample System - C4 Level 1
+
+Person(user, "User", "")
+Person(admin, "Admin", "")
+Person(systemAdmin, "System Admin", "")
+
+Enterprise_Boundary(c1, "Sample") {
+    System(sampelSystem, "Sample System", "Manages Sample System")
+    System(sampleDataPlatform, "Sample Data Platform", "Manages Sample System Data Storage and Sample System Data")
+    System(sampleOnPrem, "Sample On-Prem Systems", "On-Premise Platform - Operates a set of on-prem systems and data")
+}
+
+System_Ext(email, "SMTP Server", "Send Emails")
+
+Rel_D(user, sampelSystem, "View and track data on systems within organisation")
+Rel_D(admin, sampelSystem, "View, track and manage data on most systems within organisation")
+Rel_D(systemAdmin, sampelSystem, "View, track and manage data all systems within organisation")
+
+Rel_R(sampelSystem, email, "Update email subscriptions")
+
+BiRel_D(sampelSystem, sampleDataPlatform, "Request/Respond to System Data")
+Rel_D(sampelSystem, sampleOnPrem, "Request Data Sync")
+Rel_U(sampleOnPrem, sampleDataPlatform, "Sync Data")
+
+@enduml
