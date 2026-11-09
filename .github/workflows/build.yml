@@ -39,7 +39,7 @@ jobs:
           exit "$missing"
 
       - name: Upload the images
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: diagrams
           path: |
