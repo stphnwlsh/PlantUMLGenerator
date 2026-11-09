@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: Generate diagrams
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check the script
+        run: shellcheck generate.sh
+
+      - name: Generate every diagram
+        run: ./generate.sh
+
+      - name: Check every diagram has its images
+        run: |
+          set -euo pipefail
+          missing=0
+          while IFS= read -r -d '' file; do
+            for format in png svg; do
+              image="${file%.puml}.$format"
+              if [[ ! -s "$image" ]]; then
+                echo "::error file=$file::$image wasn't generated"
+                missing=1
+              fi
+            done
+          done < <(find . -name '*.puml' -not -path './.git/*' -print0)
+          exit "$missing"
+
+      - name: Upload the images
+        uses: actions/upload-artifact@v5
+        with:
+          name: diagrams
+          path: |
+            **/*.png
+            **/*.svg
