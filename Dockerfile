@@ -1,12 +1,16 @@
-FROM openjdk:16-jdk-alpine3.12
-ENV PLANTUML_VERSION=1.2021.8
-ENV LANG en_US.UTF-8
-RUN \
-  apk add --no-cache graphviz wget ca-certificates && \
-  apk add --no-cache graphviz wget ca-certificates ttf-dejavu fontconfig && \
-  wget "http://downloads.sourceforge.net/project/plantuml/${PLANTUML_VERSION}/plantuml.${PLANTUML_VERSION}.jar" -O plantuml.jar && \
-  apk del wget ca-certificates
-RUN ["java", "-Djava.awt.headless=true", "-jar", "plantuml.jar", "-version"]
-RUN ["dot", "-version"]
-ENTRYPOINT ["java", "-Djava.awt.headless=true", "-jar", "plantuml.jar", "-p"]
-CMD ["-tpng"]
+# PlantUML, Graphviz and a Java runtime in one small image, so you don't have to install any of them.
+FROM eclipse-temurin:25-jre-alpine
+
+# The PlantUML release to bundle. Bump it here, or build with --build-arg PLANTUML_VERSION=...
+ARG PLANTUML_VERSION=1.2026.9
+
+RUN apk add --no-cache graphviz font-dejavu fontconfig \
+    && wget -q "https://github.com/plantuml/plantuml/releases/download/v${PLANTUML_VERSION}/plantuml-${PLANTUML_VERSION}.jar" -O /opt/plantuml.jar \
+    && java -Djava.awt.headless=true -jar /opt/plantuml.jar -version \
+    && dot -V
+
+ENV HOME=/tmp
+WORKDIR /data
+
+ENTRYPOINT ["java", "-Djava.awt.headless=true", "-jar", "/opt/plantuml.jar"]
+CMD ["-help"]

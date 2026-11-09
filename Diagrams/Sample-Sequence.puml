@@ -1,0 +1,16 @@
+@startuml
+title Sample Sequence - Ordering a Flat White
+
+actor Customer
+participant "Barista" as Barista
+participant "Espresso Machine" as Machine
+database "Loyalty Card" as Card
+
+Customer -> Barista: One flat white, please
+Barista -> Card: Stamp it
+Card --> Barista: Nine stamps, one to go
+Barista -> Machine: Pull a double shot
+Machine --> Barista: Crema, as nature intended
+Barista --> Customer: Flat white, no foam art questions
+
+@enduml
