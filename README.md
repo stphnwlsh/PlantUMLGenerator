@@ -70,7 +70,7 @@ If you aren't a [PlantUML genius](https://media.giphy.com/media/2wUzjQMSsQKZzLdW
 
 Bug reports, ideas and pull requests are all welcome. [CONTRIBUTING.md](CONTRIBUTING.md) explains how, and the [code of conduct](CODE_OF_CONDUCT.md) explains how to be excellent to each other. Security problems go through the [security policy](SECURITY.md), not an issue.
 
-If it saves you some time, you can [sponsor the work](https://github.com/sponsors/stphnwlsh). It also funds [Lean Mean Clean Apps](https://leanmeancleanapps.github.io), and the coffee.
+If it saves you some time, you can [sponsor the work](https://github.com/sponsors/stphnwlsh). It also funds [Lean Mean Clean Apps](https://leanmeanclean.dev), and the coffee.
 
 ## Licence
 
